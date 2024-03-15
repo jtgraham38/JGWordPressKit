@@ -13,7 +13,7 @@ abstract class JGWPPlugin {
 
     }
 
-    //TODO: IMPLEMENT PLUGIN-WIDE PREFIX!!!!
+    //TODO: IMPLEMENT PLUGIN-WIDE PREFIX and better way of creating options!!!!
 
 
     abstract public function init_settings();
