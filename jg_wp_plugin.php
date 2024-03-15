@@ -16,7 +16,7 @@ abstract class JGWPPlugin {
 
     abstract public function init_settings();
 
-    abstract public function admin_scripts();
+    abstract public function admin_scripts($hook);
 
-    abstract public function front_end_scripts();
+    abstract public function front_end_scripts($hook);
 }
