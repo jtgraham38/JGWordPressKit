@@ -13,6 +13,8 @@ abstract class JGWPPlugin {
 
     }
 
+    //TODO: IMPLEMENT PLUGIN-WIDE PREFIX!!!!
+
 
     abstract public function init_settings();
 
