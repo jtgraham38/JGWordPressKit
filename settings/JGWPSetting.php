@@ -1,5 +1,5 @@
 <?php
-class JGWPSetting extends JGPluginItem{
+class JGWPSetting extends JGPluginParentReference{
     private $name;
     private $args;
 

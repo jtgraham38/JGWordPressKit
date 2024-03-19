@@ -19,24 +19,8 @@ abstract class JGWPPlugin {
     protected $settings_groups; //plugin settings groups, must contain array of JGWPSettingsGroup objects
     protected $settings;        //plugin settings
     protected $base_dir;        //plugin base directory
-    protected $admin_resources;  //plugin admin resources
-    protected $front_end_resources; //plugin front-end resources
-    protected $base_url;        //plugin base url
 
-    public function __construct($args = []) {
-        //extract args
-        $defaults = ['plugin_prefix'=>"jg_", 'base_dir'=> "", 'base_url'=>"",  'settings_groups'=>[], 'settings'=>[], 'admin_resources'=>[], 'front_end_resources'=>[]];
-        $args = array_merge($defaults, $args);
-        extract($args);
-
-        //set variables
-        $this->plugin_prefix = $plugin_prefix;
-        $this->settings_groups = $settings_groups;
-        $this->settings = $settings;
-        $this->base_dir = $base_dir;
-        $this->base_url = $base_url;
-        $this->admin_resources = $admin_resources;
-        $this->front_end_resources = $front_end_resources;
+    public function __construct() {
 
         //ensure that plugin_prefix is set
         if (empty($this->plugin_prefix)) {
@@ -64,22 +48,25 @@ abstract class JGWPPlugin {
             $this->plugin_prefix .= '_';
         }
 
-        //custom plugin hooks called here
-        $this->plugin();
-
         //register settings
         add_action('admin_init', array($this, 'init_settings'));
 
         //enqueue admin resources
-        add_action('admin_enqueue_scripts', array($this, 'register_admin_resources'));
+        add_action('admin_enqueue_scripts', array($this, 'admin_resources'));
 
         //enqueue front-end resources
-        add_action('wp_enqueue_scripts', array($this, 'register_front_end_resources'));
+        add_action('wp_enqueue_scripts', array($this, 'front_end_resources'));
 
     }
 
-    //custom implementation and features of the plugin
-    protected abstract function plugin();
+    public function get_prefix(){
+        return $this->plugin_prefix;
+    }
+
+    public function get_base_dir(){
+        return $this->base_dir;
+    }
+
 
     public function init_settings(){
         //create settings sections and nested settings with them
@@ -93,42 +80,17 @@ abstract class JGWPPlugin {
         }
     }
 
-    public function register_admin_resources($hook){
-        //add resources
-        foreach ($this->admin_resources as $resource) {
-            $resource->add();
-        }
-    }
+    abstract public function admin_resources($hook);
 
-    public function register_front_end_resources($hook){
-        //add resources
-        foreach ($this->front_end_resources as $resource) {
-            $resource->add();
-        }
-    }
-
-    //getters used by other JGWP classes
-    public function get_prefix(){
-        return $this->plugin_prefix;
-    }
-
-    public function get_base_dir(){
-        return $this->base_dir;
-    }
-
-    public function get_base_url(){
-        return $this->base_url;
-    }
+    abstract public function front_end_resources($hook);
 }
 
 //class to make sure every object created has a reference to the plugin object
-abstract class JGPluginItem{
+class JGPluginParentReference{
     protected $plugin;
 
     public function __construct($plugin){
         $this->plugin = $plugin;
     }
-
-    abstract public function add();
 }
 
