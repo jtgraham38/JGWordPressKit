@@ -4,6 +4,8 @@ class JGWPResource extends JGPluginItem{
     protected $filename;
     protected $type;
     protected $dependencies;
+    protected $id;
+    protected $extension;
 
     public function __construct($plugin, $filename, $dependencies = []){
         parent::__construct($plugin);   //call parent constructor
