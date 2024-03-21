@@ -1,5 +1,5 @@
 <?php
-class JGWPResource extends JGPluginItem{
+class JGWPResource extends JGWPPluginItem{
 
     protected $filename;
     protected $type;

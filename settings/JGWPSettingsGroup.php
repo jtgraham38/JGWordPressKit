@@ -1,5 +1,5 @@
 <?php
-class JGWPSettingsGroup extends JGPluginItem{
+class JGWPSettingsGroup extends JGWPPluginItem{
     
     private $section_id;
     private $section_title;
