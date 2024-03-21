@@ -122,7 +122,7 @@ abstract class JGWPPlugin {
 }
 
 //class to make sure every object created has a reference to the plugin object
-abstract class JGPluginItem{
+abstract class JGWPPluginItem{
     protected $plugin;
 
     public function __construct($plugin){
