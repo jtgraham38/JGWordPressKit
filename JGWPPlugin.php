@@ -52,7 +52,7 @@ abstract class JGWPPlugin {
         if (!is_array($this->settings_groups)) {
             throw new Exception('You must set the settings_groups property to an array of JGWPSettingsGroup objects.');
         }
-
+        
         //ensure that settings is an array of JGWPSetting objects
         if (!is_array($this->settings)) {
             throw new Exception('You must set the settings property to an array of JGWPSetting objects.');
