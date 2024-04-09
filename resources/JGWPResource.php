@@ -1,4 +1,8 @@
 <?php
+// exit if accessed directly
+if (!defined('ABSPATH')) {
+    exit;
+}
 class JGWPResource extends JGWPPluginItem{
 
     protected $filename;

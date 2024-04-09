@@ -1,4 +1,8 @@
 <?php
+// exit if accessed directly
+if (!defined('ABSPATH')) {
+    exit;
+}
 class JGWPSettingsGroup extends JGWPPluginItem{
     
     private $section_id;

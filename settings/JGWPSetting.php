@@ -1,4 +1,8 @@
 <?php
+// exit if accessed directly
+if (!defined('ABSPATH')) {
+    exit;
+}
 class JGWPSetting extends JGWPPluginItem{
     private $name;
     private $args;

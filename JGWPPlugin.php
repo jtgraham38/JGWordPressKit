@@ -1,4 +1,8 @@
 <?php
+// exit if accessed directly
+if (!defined('ABSPATH')) {
+    exit;
+}
 //require all dependencies
 function require_all($dir) {
     foreach (glob($dir . '/*', GLOB_ONLYDIR) as $subdir) {
