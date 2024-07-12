@@ -1,10 +1,10 @@
 <?php
-namespace jtgraham\jgwordpresskit;
+namespace jtgraham38\jgwordpresskit;
 
 
-// if (!defined('ABSPATH')) {
-//     exit;
-// }
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 
 class Plugin {
@@ -21,18 +21,18 @@ class Plugin {
         $this->base_url = $base_url;
 
         //ensure that plugin_prefix is set
-        if (empty($this->plugin_prefix)) {
-            throw new Exception('You must set a plugin prefix.');
+        if (empty($this->prefix)) {
+            throw new \Exception('You must set a plugin prefix.');
         }
 
         //ensure that plugin_base_dir is set
-        if (empty($this->plugin_base_dir)) {
-            throw new Exception('You must set a plugin base directory.');
+        if (empty($this->base_dir)) {
+            throw new \Exception('You must set a plugin base directory.');
         }
 
         //ensure that plugin_base_url is set
-        if (empty($this->plugin_base_url)) {
-            throw new Exception('You must set a plugin base URL.');
+        if (empty($this->base_url)) {
+            throw new \Exception('You must set a plugin base URL.');
         }
     }
 
