@@ -1,5 +1,5 @@
 <?php
-namespace jtgraham\wpkit;
+namespace jtgraham\jgwordpresskit;
 
 
 if (!defined('ABSPATH')) {

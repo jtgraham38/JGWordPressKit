@@ -8,7 +8,7 @@
     },
     "autoload": {
         "psr-4": {
-            "jtgraham38\\wpkit\\": "src/"
+            "jtgraham38\\jgwordpresskit\\": "src/"
         }
     },
     "authors": [
