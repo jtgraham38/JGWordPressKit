@@ -2,9 +2,9 @@
 namespace jtgraham\jgwordpresskit;
 
 
-if (!defined('ABSPATH')) {
-    exit;
-}
+// if (!defined('ABSPATH')) {
+//     exit;
+// }
 
 
 abstract class PluginFeature {
