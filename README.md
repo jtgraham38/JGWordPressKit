@@ -4,6 +4,8 @@
 
 JG WordPress Kit is an innovative WordPress plugin development framework designed to streamline and organize your plugin development process. By modularizing features into organized chunks, it enables developers to build robust and scalable WordPress plugins with ease.
 
+> **"When working with plugin code, prioritize *what features* are implemented and *where* they reside rather than *which frameworks* are used and *how to navigate their extensive directories*."**
+
 More information can be found on my [Medium article](https://medium.com/@jtgraham38/my-innovative-wordpress-plugin-development-framework-ede03f540f6)
 
 ## Features
@@ -12,6 +14,28 @@ More information can be found on my [Medium article](https://medium.com/@jtgraha
 - **Easy Integration:** Simplifies the process of adding filters and actions.
 - **Flexible Configuration:** Easily set plugin prefixes, base directories, and URLs.
 - **Extensible:** Allows for easy registration and initialization of new features.
+
+## Directory Structure
+
+```
+your-plugin
+|->features
+|  |->Api
+|  |->Etc
+|  |->FirstBlock
+|  |->SecondBlock
+|  |->Settings
+|  |->Shortcode
+|  |->Statistics
+|  |->Widget
+|->vendor
+|  |->dependencies here...
+|->composer.json
+|->composer.lock
+|->plugin.php
+|->README.md
+|->uninstall.php
+```
 
 ## Usage
 
@@ -41,8 +65,6 @@ $plugin->init();
 defined('WP_UNINSTALL_PLUGIN') || exit;
 
 use jtgraham38\jgwordpresskit\Plugin;
-
-require_once __DIR__ . '/vendor/autoload.php';
 
 $plugin = new Plugin('your_prefix', plugin_dir_path(__FILE__), plugin_dir_url(__FILE__));
 Plugin::uninstall('your_prefix_');
