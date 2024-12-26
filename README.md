@@ -4,6 +4,8 @@
 
 JG WordPress Kit is an innovative WordPress plugin development framework designed to streamline and organize your plugin development process. By modularizing features into organized chunks, it enables developers to build robust and scalable WordPress plugins with ease.
 
+More information can be found on my [Medium article](https://medium.com/@jtgraham38/my-innovative-wordpress-plugin-development-framework-ede03f540f6)
+
 ## Features
 
 - **Modular Structure:** Break down your plugin into manageable and reusable features.
