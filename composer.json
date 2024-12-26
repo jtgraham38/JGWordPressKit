@@ -8,6 +8,7 @@
     },
     "autoload": {
         "psr-4": {
+            "YourPlugin\\": "features/",
             "jtgraham38\\jgwordpresskit\\": "src/"
         }
     },
