@@ -17,6 +17,7 @@ More information can be found on my [Medium article](https://medium.com/@jtgraha
 
 ### Plugin Initialization Example
 
+#### your-plugin.php
 ```php:your-plugin.php
 use jtgraham38\jgwordpresskit\Plugin;
 use YourPlugin\YourFirstFeature;
@@ -34,6 +35,7 @@ $plugin->init();
 
 ### Plugin Uninstall Example
 
+#### uninstall.php
 ```php:uninstall.php
 <?php
 defined('WP_UNINSTALL_PLUGIN') || exit;
@@ -46,7 +48,7 @@ $plugin = new Plugin('your_prefix', plugin_dir_path(__FILE__), plugin_dir_url(__
 Plugin::uninstall('your_prefix_');
 ```
 
-
+#### composer.json
 ```json: composer.json
 ...
 
@@ -70,6 +72,7 @@ Plugin::uninstall('your_prefix_');
 ```
 ### Plugin Feature Implementation Example
 
+#### features/YourFirstFeature/YourFirstFeature.php
 ```php:features/YourFirstFeature/YourFirstFeature.php
 <?php
 
