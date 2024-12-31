@@ -6,7 +6,7 @@ JG WordPress Kit is an innovative WordPress plugin development framework designe
 
 > **"When working with plugin code, prioritize *what features* are implemented and *where* they reside rather than *which frameworks* are used and *how to navigate their extensive directories*."**
 
-More information can be found on my [Medium article](https://medium.com/@jtgraham38/my-innovative-wordpress-plugin-development-framework-ede03f540f6)
+More information can be found in this [article](https://jacob-t-graham.com/2024/11/07/my-innovative-wordpress-plugin-development-framework/).
 
 ## Features
 
@@ -141,8 +141,12 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 
 This project is licensed under the MIT License.
 
+## More Info
+
+Check this [article](https://jacob-t-graham.com/2024/11/07/my-innovative-wordpress-plugin-development-framework/) for more info about this project
+
 ## Author
 
-[John Graham](https://jacob-t-graham.com/contact/)
+[Jacob Graham](https://jacob-t-graham.com/contact/)
 
-[GitHub](https://github.com/jtgraham38) [Medium](https://medium.com/@jtgraham38)
+[GitHub](https://github.com/jtgraham38) [X](https://x.com/jtgraham38) [Medium](https://medium.com/@jtgraham38)
