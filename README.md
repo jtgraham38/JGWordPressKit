@@ -80,7 +80,7 @@ Plugin::uninstall('your_prefix_');
       }
    },
     "require": {
-        "jtgraham38/jgwordpresskit": "dev-main"
+        "jtgraham38/jgwordpresskit": "^1.1.0"
     },
     "repositories": [
         {
