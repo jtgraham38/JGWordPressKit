@@ -34,6 +34,9 @@ class Plugin {
         if (empty($this->base_url)) {
             throw new \Exception('You must set a plugin base URL.');
         }
+
+        //register uninstall hook
+        $this->register_uninstall();
     }
 
     //register a new feature with the plugin
@@ -60,6 +63,43 @@ class Plugin {
         foreach ($this->features as $feature) {
             $feature->add_filters();
             $feature->add_actions();
+        }
+    }
+
+     //Register plugin for uninstall
+     //Call this when initializing your plugin
+    public function register_uninstall() {
+        \add_action($this->prefix . '_uninstall', [$this, 'do_uninstall']);
+    }
+
+    //Uninstall all features of the plugin and the plugin itself
+    //Call this from uninstall.php using: Plugin::uninstall('your_prefix_');
+    public static function uninstall($prefix) {
+        // Ensure this is called only during uninstall
+        if (!defined('WP_UNINSTALL_PLUGIN')) {
+            exit;
+        }
+
+        // Run plugin-specific uninstall hook
+        \do_action($prefix . '_uninstall');
+
+        // Clean up all options that start with the plugin prefix
+        global $wpdb;
+        $wpdb->query(
+            $wpdb->prepare(
+                "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
+                $prefix . '_%'
+            )
+        );
+    }
+
+    //Optional uninstall method that can be implemented by child class
+    protected function do_uninstall() {
+        // Child class can override this method
+        foreach ($this->features as $feature) {
+            if (method_exists($feature, 'uninstall')) {
+                $feature->uninstall();
+            }
         }
     }
 };
