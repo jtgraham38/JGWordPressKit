@@ -82,41 +82,13 @@ class Plugin {
     }
 
 
-    //TODO: ensure uninstall works????
-
-     //Register plugin for uninstall
-     //Call this if you want to uninstall the data registered by the plugin
-    public function register_uninstall() {
-        \add_action($this->prefix . '_uninstall', [$this, 'do_uninstall']);
-    }
-
-    //Uninstall all features of the plugin and the plugin itself
-    //Call this from uninstall.php using: Plugin::uninstall('your_prefix_');
-    public static function uninstall($prefix) {
-        // Ensure this is called only during uninstall
-        if (!defined('WP_UNINSTALL_PLUGIN')) {
-            exit;
-        }
-
-        // Run plugin-specific uninstall hook
-        \do_action($prefix . '_uninstall');
-
-        // Clean up all options that start with the plugin prefix
-        global $wpdb;
-        $wpdb->query(
-            $wpdb->prepare(
-                "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
-                $prefix . '_%'
-            )
-        );
-    }
-
-    //run the uninstall method for all features
-    protected function do_uninstall() {
-        // Child class can override this method
+    //handle uninstalling the plugin, by calling the uninstall method for all features
+    //this should be hooked and called manually by the plugin developer, based on conditions they set for the plugin
+    public function uninstall() {
         foreach ($this->features as $key => $feature) {
+            //if the feature has an uninstall method, call it
             if (method_exists($feature, 'uninstall')) {
-                $feature->uninstall();
+                $feature->uninstall();  //in this method, each feature should clean up any data it has registered
             }
         }
     }
