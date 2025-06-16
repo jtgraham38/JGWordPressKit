@@ -27,6 +27,11 @@ abstract class PluginFeature {
         return $this->get_prefix() . '_' . $string;
     }
 
+    //get a config value
+    public function config(string $key) {
+        return $this->plugin->config($key);
+    }
+
     //get plugin prefix
     public function get_prefix() {
         return $this->plugin->get_prefix();

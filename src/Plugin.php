@@ -8,17 +8,19 @@ if (!defined('ABSPATH')) {
 
 
 class Plugin {
-    public $features = [];  //array of feature objects, this class is extended to break the plugin into organized chunks
+    public array $features = [];  //array of feature objects, this class is extended to break the plugin into organized chunks
+    private array $config;         //array of config values, this is set by the plugin developer, to allow for a single source of truth for the plugin.  Read only.
 
-    protected $prefix;          //used to prefix settings, options, etc
-    protected $base_dir;        //plugin base directory
-    protected $base_url;        //plugin base url
+    protected string $prefix;          //used to prefix settings, options, etc
+    protected string $base_dir;        //plugin base directory
+    protected string $base_url;        //plugin base url
 
     //constructor
-    public function __construct($prefix, $base_dir, $base_url) {
+    public function __construct(string $prefix, string $base_dir, string $base_url, array $config = []) {
         $this->prefix = $prefix;
         $this->base_dir = $base_dir;
         $this->base_url = $base_url;
+        $this->config = $config;
 
         //ensure that plugin_prefix is set
         if (empty($this->prefix)) {
@@ -34,9 +36,6 @@ class Plugin {
         if (empty($this->base_url)) {
             throw new \Exception('You must set a plugin base URL.');
         }
-
-        //register uninstall hook
-        $this->register_uninstall();
     }
 
     //register a new feature with the plugin
@@ -73,6 +72,11 @@ class Plugin {
         return $this->base_url;
     }
 
+    //get a config value
+    public function config(string $key) {
+        return $this->config[$key];
+    }
+
     //run hooks for all features of the app, call this after all features are registered
     public function init() {
         foreach ($this->features as $key => $feature) {
@@ -80,7 +84,6 @@ class Plugin {
             $feature->add_actions();
         }
     }
-
 
     //handle uninstalling the plugin, by calling the uninstall method for all features
     //this should be hooked and called manually by the plugin developer, based on conditions they set for the plugin

@@ -14,6 +14,10 @@ More information can be found in this [article](https://jacob-t-graham.com/2024/
 - **Easy Integration:** Simplifies the process of adding filters and actions.
 - **Flexible Configuration:** Easily set plugin prefixes, base directories, and URLs.
 - **Extensible:** Allows for easy registration and initialization of new features.
+- **Key-Based Feature Sharing:** Features can access other features using string keys for seamless communication.
+- **Streamlined Uninstall:** Automatic cleanup through feature-specific uninstall methods.
+- **Prefix Utilities:** Built-in methods for consistent prefixing of strings, options, and settings.
+- **Configuration Management:** Single source of truth for plugin configuration with easy access across all features.
 
 ## Directory Structure
 
@@ -47,14 +51,26 @@ use jtgraham38\jgwordpresskit\Plugin;
 use YourPlugin\YourFirstFeature;
 use YourPlugin\YourSecondFeature;
 
-$plugin = new Plugin('your_prefix', plugin_dir_path(__FILE__), plugin_dir_url(__FILE__));
+// Define your plugin configuration
+$config = [
+    'version' => '1.0.0',
+    'api_endpoint' => 'https://api.example.com',
+    'debug_mode' => false,
+    'cache_duration' => 3600,
+    'max_items' => 100
+];
 
-// Add features to the plugin
-$plugin->register_feature(new YourFirstFeature()); // Add your first feature
-$plugin->register_feature(new YourSecondFeature()); // Add your second feature
+$plugin = new Plugin('your_prefix', plugin_dir_path(__FILE__), plugin_dir_url(__FILE__), $config);
+
+// Add features to the plugin with descriptive keys
+$plugin->register_feature('first_feature', new YourFirstFeature());
+$plugin->register_feature('second_feature', new YourSecondFeature());
 
 // Initialize the plugin
 $plugin->init();
+
+// Register the uninstall hook
+register_uninstall_hook(__FILE__, array($plugin, 'uninstall'));
 ```
 
 ### Plugin Uninstall Example
@@ -64,10 +80,8 @@ $plugin->init();
 <?php
 defined('WP_UNINSTALL_PLUGIN') || exit;
 
-use jtgraham38\jgwordpresskit\Plugin;
-
-$plugin = new Plugin('your_prefix', plugin_dir_path(__FILE__), plugin_dir_url(__FILE__));
-Plugin::uninstall('your_prefix_');
+// The uninstall method will be called automatically via the hook
+// No additional code needed here
 ```
 
 #### composer.json
@@ -120,18 +134,92 @@ class YourFirstFeature extends PluginFeature{
             'YourFirstFeature', // page title
             'YourFirstFeature', // menu title
             'manage_options', // capability
-            'yourfirstfeature', // menu slug
+            $this->prefixed('yourfirstfeature'), // menu slug with prefix
             array($this, 'render_page') // callback function
         );
     }
 
     public function render_page(){
         echo esc_html("<h1>YourFirstFeature</h1> <strong>Coming soon...</strong>");
+        
+        // Access configuration values
+        $version = $this->config('version');
+        $debug_mode = $this->config('debug_mode');
+        
+        if ($debug_mode) {
+            echo '<p>Debug mode is enabled. Version: ' . esc_html($version) . '</p>';
+        }
     }
 
+    // Example of accessing another feature
+    public function access_other_feature() {
+        $second_feature = $this->get_feature('second_feature');
+        // Now you can use methods from the second feature
+    }
 
+    // Example of using configuration in feature logic
+    public function process_data() {
+        $max_items = $this->config('max_items');
+        $cache_duration = $this->config('cache_duration');
+        
+        // Use configuration values in your feature logic
+        $items = get_posts(['numberposts' => $max_items]);
+        
+        // Set cache with configured duration
+        set_transient($this->prefixed('cached_data'), $items, $cache_duration);
+    }
+
+    // Cleanup method called during uninstall
+    public function uninstall() {
+        // Clean up any data, options, or settings created by this feature
+        delete_option($this->prefixed('some_option'));
+        // Remove any database tables, etc.
+    }
 }
 ```
+
+## Key Features
+
+### Prefix Utilities
+
+The framework provides convenient methods for consistent prefixing:
+
+- `$this->prefixed($string)` - Returns a string prefixed with your plugin prefix
+- `$this->pre($string)` - Echoes a prefixed string
+- `$this->get_prefix()` - Returns the plugin prefix
+- `$this->get_base_dir()` - Returns the plugin base directory
+- `$this->get_base_url()` - Returns the plugin base URL
+
+### Feature Communication
+
+Features can access other features using string keys:
+
+```php
+// In any feature class
+$other_feature = $this->get_feature('feature_key');
+$other_feature->some_method();
+```
+
+### Streamlined Uninstall
+
+The framework automatically handles plugin uninstallation by calling the `uninstall()` method on each feature that implements it. Simply call `$plugin->uninstall()` in your uninstall.php file, and each feature will clean up its own data.
+
+### Configuration Management
+
+The framework provides a centralized configuration system that serves as a single source of truth for your plugin settings:
+
+```php
+// Access configuration values in any feature
+$version = $this->config('version');
+$api_endpoint = $this->config('api_endpoint');
+$debug_mode = $this->config('debug_mode');
+```
+
+**Benefits:**
+- **Single Source of Truth:** All configuration is defined in one place
+- **Easy Access:** Any feature can access any configuration value
+- **Type Safety:** Configuration values are read-only and consistent
+- **Maintainability:** Change a value once and it's updated everywhere
 
 ## Contributing
 
