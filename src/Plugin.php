@@ -81,6 +81,9 @@ class Plugin {
         }
     }
 
+
+    //TODO: ensure uninstall works????
+
      //Register plugin for uninstall
      //Call this if you want to uninstall the data registered by the plugin
     public function register_uninstall() {
@@ -108,7 +111,7 @@ class Plugin {
         );
     }
 
-    //Optional uninstall method that can be implemented by child class
+    //run the uninstall method for all features
     protected function do_uninstall() {
         // Child class can override this method
         foreach ($this->features as $key => $feature) {
