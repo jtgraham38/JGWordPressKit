@@ -45,6 +45,16 @@ class Plugin {
         $this->features[] = $feature;
     }
 
+    //echo a string with the plugin prefix
+    public function pre($string) {
+        echo $this->prefixed($string);
+    }
+
+    //get a string prefixed with the plugin prefix
+    public function prefixed($string) {
+        return $this->get_prefix() . '_' . $string;
+    }
+
     //get plugin prefix
     public function get_prefix() {
         return $this->prefix;
@@ -67,7 +77,7 @@ class Plugin {
     }
 
      //Register plugin for uninstall
-     //Call this when initializing your plugin
+     //Call this if you want to uninstall the data registered by the plugin
     public function register_uninstall() {
         \add_action($this->prefix . '_uninstall', [$this, 'do_uninstall']);
     }
