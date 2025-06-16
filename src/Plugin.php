@@ -73,7 +73,7 @@ class Plugin {
         return $this->base_url;
     }
 
-    //run hooks for all features of the app
+    //run hooks for all features of the app, call this after all features are registered
     public function init() {
         foreach ($this->features as $key => $feature) {
             $feature->add_filters();
