@@ -12,6 +12,11 @@ abstract class PluginFeature {
     abstract function add_filters();
     abstract function add_actions();
 
+    //get a feature by key
+    public function get_feature(string $key) {
+        return $this->plugin->get_feature($key);
+    }
+
     //echo a string with the plugin prefix
     public function pre($string) {
         echo $this->prefixed($string);

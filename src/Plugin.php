@@ -40,9 +40,14 @@ class Plugin {
     }
 
     //register a new feature with the plugin
-    public function register_feature($feature) {
+    public function register_feature(string $key, PluginFeature $feature) {
         $feature->plugin = $this;
-        $this->features[] = $feature;
+        $this->features[$key] = $feature;
+    }
+
+    //get a feature by key
+    public function get_feature(string $key) {
+        return $this->features[$key];
     }
 
     //echo a string with the plugin prefix
@@ -70,7 +75,7 @@ class Plugin {
 
     //run hooks for all features of the app
     public function init() {
-        foreach ($this->features as $feature) {
+        foreach ($this->features as $key => $feature) {
             $feature->add_filters();
             $feature->add_actions();
         }
@@ -106,7 +111,7 @@ class Plugin {
     //Optional uninstall method that can be implemented by child class
     protected function do_uninstall() {
         // Child class can override this method
-        foreach ($this->features as $feature) {
+        foreach ($this->features as $key => $feature) {
             if (method_exists($feature, 'uninstall')) {
                 $feature->uninstall();
             }
