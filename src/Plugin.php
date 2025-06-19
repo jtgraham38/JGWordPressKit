@@ -74,8 +74,8 @@ class Plugin {
 
     //get a config value
     public function config(string $key) {
-        if (isset($this->plugin->config[$key])) {
-            return $this->plugin->config[$key];
+        if (isset($this->config[$key])) {
+            return $this->config[$key];
         }
         return null;
     }
