@@ -94,7 +94,7 @@ defined('WP_UNINSTALL_PLUGIN') || exit;
       }
    },
     "require": {
-        "jtgraham38/jgwordpresskit": "dev-main"
+        "jtgraham38/jgwordpresskit": "^1.1.0"
     },
     "repositories": [
         {
