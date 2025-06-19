@@ -74,7 +74,10 @@ class Plugin {
 
     //get a config value
     public function config(string $key) {
-        return $this->config[$key];
+        if (isset($this->plugin->config[$key])) {
+            return $this->plugin->config[$key];
+        }
+        return null;
     }
 
     //run hooks for all features of the app, call this after all features are registered

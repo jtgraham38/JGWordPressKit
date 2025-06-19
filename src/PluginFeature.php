@@ -35,10 +35,7 @@ abstract class PluginFeature {
 
     //get a config value
     public function config(string $key) {
-        if (isset($this->plugin->config[$key])) {
-            return $this->plugin->config[$key];
-        }
-        return null;
+        return $this->plugin->config($key);
     }
 
     //get plugin prefix
