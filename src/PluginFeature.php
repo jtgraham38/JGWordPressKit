@@ -18,8 +18,14 @@ abstract class PluginFeature {
     }
 
     //echo a string with the plugin prefix
-    public function pre($string) {
-        echo $this->prefixed($string);
+    public function pre($string, $esc_mode = 'attr') {
+        if ($esc_mode == 'attr') {
+            echo esc_attr($this->prefixed($string));
+        } else if ($esc_mode == 'html') {
+            echo esc_html($this->prefixed($string));
+        } else {
+            echo $this->prefixed($string);
+        }
     }
 
     //get a string prefixed with the plugin prefix
@@ -29,7 +35,10 @@ abstract class PluginFeature {
 
     //get a config value
     public function config(string $key) {
-        return $this->plugin->config($key);
+        if (isset($this->plugin->config[$key])) {
+            return $this->plugin->config[$key];
+        }
+        return null;
     }
 
     //get plugin prefix
