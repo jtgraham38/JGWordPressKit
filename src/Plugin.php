@@ -36,6 +36,11 @@ class Plugin {
         if (empty($this->base_url)) {
             throw new \Exception('You must set a plugin base URL.');
         }
+
+        //if the prefix does not end with an underscore, add one
+        if (substr($this->prefix, -1) !== '_') {
+            $this->prefix .= '_';
+        }
     }
 
     //register a new feature with the plugin
@@ -56,7 +61,7 @@ class Plugin {
 
     //get a string prefixed with the plugin prefix
     public function prefixed($string) {
-        return $this->get_prefix() . '_' . $string;
+        return $this->get_prefix() . $string;
     }
 
     //get plugin prefix
