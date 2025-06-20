@@ -30,7 +30,7 @@ abstract class PluginFeature {
 
     //get a string prefixed with the plugin prefix
     public function prefixed($string) {
-        return $this->get_prefix() . '_' . $string;
+        return $this->plugin->prefixed($string);
     }
 
     //get a config value
